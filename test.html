@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=0.5,maximum-scale=1.0,user-scalable=no"/>
+	<title>测试IOS与JS之前的互调</title>
+	<style type="text/css">
+	  * {
+	  	font-size: 40px;
+	  }
+	</style>
+  <script type="text/javascript">
+
+  var jsFunc = function(argument) {
+      document.getElementById('jsParamFuncSpan').innerHTML
+      = argument['data'];
+  }
+  
+  var jsParamFunc = function(argument) {
+    document.getElementById('jsParamFuncSpan').innerHTML
+    = argument['data'];
+  }
+  
+  var getUserLocation = function(argument) {
+      document.getElementById('jsParamFuncSpan').innerHTML
+      = argument['data'];
+  }
+  function login() {
+      OCModel.login({'username':document.getElementById("username").value,'password':document.getElementById("password").value});
+  }
+  function regist() {
+      OCModel.regist({'username':document.getElementById("username").value,'password':document.getElementById("password").value});
+  }
+  </script>
+  
+</head>
+
+<body>
+  
+<div style="margin-top: 100px">
+	<h1>Test how to use objective-c call js</h1>
+	<input type="button" value="JC调起OC相机" onclick="OCModel.callSystemCamera()">
+</div>
+<div>
+	<input type="button" value="JS调起OC弹窗" onclick="OCModel.showAlertMsg('JS发起弹窗调起', '收到网页信息')">
+</div>
+
+<div>
+	<input type="button" value="JS调用OC参数方法" onclick="OCModel.callWithDict({'name': 'testname', 'age': 10, 'height': 170})">
+</div>
+<div>
+	<input type="button" value="OC和JS互调" onclick="OCModel.jsCallObjcAndObjcCallJsWithDict({'name': 'testname', 'age': 10, 'height': 170})">
+</div>
+
+<div>
+    <input type="button" value="JS获取用户位置信息" onclick="OCModel.callUserLocation()">
+</div>
+
+<div>
+    <input type="text" name="username" value="" id="username">
+    <input type="text" name="password" value="" id="password">
+</div>
+<div>
+    <input type="button" name="registBtn" value="注册" onclick="regist()">
+    <input type="button" name="submitBtn" value="登录" onclick="login()">
+</div>
+
+<div>
+    <input type="button" value="退出" onclick="OCModel.callUserLogout()">
+</div>
+
+<div>
+  <a href="jsbridge://gotoController?AnotherViewController">跳转至地图页</a>
+</div>
+
+<div>
+	<span id="jsParamFuncSpan" style="color: red; font-size: 50px;"></span>
+</div>
+
+
+</body>
+</html>
